@@ -1,0 +1,13 @@
+one:
+  title: MyString
+  user_id: 1
+  comment: MyText
+  type: 
+  content: MyText
+
+two:
+  title: MyString
+  user_id: 1
+  comment: MyText
+  type: 
+  content: MyText

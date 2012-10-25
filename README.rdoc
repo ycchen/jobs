@@ -1,0 +1,35 @@
+== Welcome to Jobs
+1. Add following gems to Gemfile
+   
+    gem 'jquery-rails'
+    gem 'bcrypt-ruby', :require => 'bcrypt'
+    gem 'devise'
+
+    group :development, :test do
+      gem "rspec-rails", "~> 2.11.4"
+      gem 'capybara'
+      gem 'nifty-generators'
+      gem 'faker'
+      gem "populator", "~> 1.0.0"
+      gem 'will_paginate'
+      gem 'kaminari'
+      gem 'sqlite3'
+    end
+
+
+2. create layout using nifty-generators
+$ rails g nifty:layout
+
+3. Run the generator for devise
+$ rails g devise:install
+
+# generate User model
+$ rails g devise User
+# rake db:migrate
+
+4. check for routes
+$ rake routes
+
+5. create posts
+$ rails g nifty:scaffold post title:string user_id:integer comment:text type:string content:text
+$ rake db:migrate
