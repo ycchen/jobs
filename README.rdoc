@@ -30,6 +30,10 @@ $ rails g devise User
 4. check for routes
 $ rake routes
 
-5. create posts
+
+5. create home controller
+$ rails g controller home index
+
+6. create posts
 $ rails g nifty:scaffold post title:string user_id:integer comment:text type:string content:text
 $ rake db:migrate
