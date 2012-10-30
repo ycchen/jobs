@@ -41,6 +41,8 @@ add_index :jobs, :user_id
 
 $ rake db:migrate
 
+#Commit
+
 7. generate devise view
 $ rails g devise:views users
 
@@ -56,4 +58,4 @@ $ rails g devise:views users
     render template: "shared/404", :status => :not_found
   end
 
-10.
+#Commit
