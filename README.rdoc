@@ -34,6 +34,26 @@ $ rake routes
 5. create home controller
 $ rails g controller home index
 
-6. create posts
-$ rails g nifty:scaffold post title:string user_id:integer comment:text type:string content:text
+6. create jobs
+$ rails g nifty:scaffold job title:string job_type:string occupation:string company_name:string location:string url:string description:text apply_information:text deadline:date user_id:integer
+
+add_index :jobs, :user_id
+
 $ rake db:migrate
+
+7. generate devise view
+$ rails g devise:views users
+
+8. Rails internationalization (I18n)
+  a. modify /config/locales/en.yml filde to add all of label
+  b. create /config/locales/zh_tw.yml and add the same label but in Chinese
+  c. add before_filter :set_locale in controllers/application_controller.rb
+
+9. Error exception handling
+  add rescure_from ActiveRecord::RecordNotFound, :with => :render_not_found in application_controller.rb
+
+  def render_not_found
+    render template: "shared/404", :status => :not_found
+  end
+
+10.

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= content_for?(:title) ? yield(:title) : "FeedEngine" %></title>
+    <title><%= content_for?(:title) ? yield(:title) : "Jobs Engine" %></title>
     <%= stylesheet_link_tag "application" %>
     <%= javascript_include_tag "application" %>
     <%= csrf_meta_tag %>
@@ -23,8 +23,23 @@
       <%= yield %>
     </div><!-- /container -->
 
+    <div id="footer">
+        <ul class="menu clearfix">
+            <li><%= link_to t(:faq), root_path %></li>
+            <li><%= link_to t(:rss_feed), "http://feeds.feedburner.com/rubyjobs-taiwan" %></li>
+            <li class="twitter"><%= link_to t(:twitter), "http://twitter.com/rubytaiwan" %></li>
+        </ul>
+        <p class="language">Choose your language: 
+      <%= link_to "English", :controller => controller.controller_name, 
+                   :action => controller.action_name, :locale => "en" %>
+      <%= link_to "繁體中文", :controller => controller.controller_name, 
+                   :action => controller.action_name, :locale => "zh_tw" %>
+      </p>
+    </div>
+
     <footer>
-     <%= debug(params) if Rails.env.development? %>        
+     <%= debug(params) if Rails.env.development? %>
     </footer>
+
   </body>
 </html>

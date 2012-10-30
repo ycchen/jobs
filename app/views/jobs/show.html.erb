@@ -1,0 +1,18 @@
+<div class="job-content">
+  <h1 class="jobtitle"><%= @job.title %></h1>
+  
+  <p class="date">
+    <%= t("posted") %>: <%= @job.created_at.to_date %>
+  </p>
+
+  <p class="social">
+    <%= link_to "Tweet this job!", "http://twitter.com?status=", :class => "twitter", :title => "Tweet this job!" %>
+    <%= link_to "Facebook this job!", "http://www.facebook.com/sharer.php?", :class => "facebook", :title => "Facebook this job!" %>
+  </p>
+
+
+  <%= render :partial => "job", :object => @job %>
+
+</div>
+
+

@@ -87,3 +87,65 @@ a {
 .error_messages ul {
   margin: 0;
 }
+
+#footer {
+  width: 75%;
+  margin: 0 auto;
+  background-color: #FFF;
+  padding: 20px 40px;
+  margin-top: 20px;
+  position: relative;
+}
+#footer .menu {
+    margin-bottom: 8px;
+}
+
+#footer .menu li {
+    border-right: 1px solid #ccc;
+    margin-right: 10px;
+    padding-right: 9px;
+}
+
+#footer .menu .twitter {
+    background: url(sprite.png) 0 -570px no-repeat;
+    border-right: 0;
+    margin-right: 0;
+    padding-right: 0;
+    padding-left: 30px;
+    height: 22px;
+}
+
+#footer .menu a, #footer .language a {
+    color: #696969;
+}
+
+#footer .menu a:hover, #footer .language a:hover {
+    color: #000;
+}
+
+#footer address {
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-style: normal;
+}
+
+#footer address a, .faq a {
+    text-decoration: underline;
+}
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.clearfix {
+    display:inline-block;
+}
+/* Hide from IE Mac \*/
+
+.clearfix {
+    display:block;
+}

@@ -1,0 +1,23 @@
+one:
+  title: MyString
+  job_type: MyString
+  occupation: MyString
+  company_name: MyString
+  location: MyString
+  url: MyString
+  description: MyText
+  apply_information: MyText
+  deadline: 2012-10-29
+  user_id: 1
+
+two:
+  title: MyString
+  job_type: MyString
+  occupation: MyString
+  company_name: MyString
+  location: MyString
+  url: MyString
+  description: MyText
+  apply_information: MyText
+  deadline: 2012-10-29
+  user_id: 1

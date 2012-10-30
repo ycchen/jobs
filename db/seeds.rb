@@ -5,3 +5,12 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+user = User.create(:email => "admin@aol.com", :password => "foobar", :password_confirmation => "foobar")
+user.confirmed_at = Time.now
+user.save
+
+job = Job.create!(	:title => "Rails developer", :url => "http://www.dmsva.com",
+					:company_name => "DMSVA", :job_type => "Full-time", :occupation => "Web back-end",
+					:location => "Herndon, VA", :user_id => 1,
+					:description => "This is awesome Ruby job!<br> The salary is also great!", :apply_information => "Please email to me")
