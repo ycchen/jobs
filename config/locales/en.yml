@@ -7,9 +7,9 @@ en:
   search: Search
   preview: Preview
 
-  logout: logout
+  signout: Sign out
   signup: Sign up
-  login: Login
+  signin: Sign in
   settings: Settings
 
   edit: Edit

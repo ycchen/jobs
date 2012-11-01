@@ -59,3 +59,30 @@ $ rails g devise:views users
   end
 
 #Commit
+
+10. using t() and raw() methods
+raw(): this method outputs without escaping a string. Since escaping tags is now default, this can be used when you don't want Rails to automatically escape tags.
+t(): this method is for translate. I18n.translate.
+
+11.
+  before_filter :authenticate_user!, :only => [:new, :edit, :update, :destroy]
+    OR
+  before_filter :authenticate_user!, only: [:new, :edit, :update, :destroy]
+
+Devise controller filters and helpers
+  # To set up a controller with user authentication, just add this before_filter:
+  before_filter :authenticate_user! 
+  
+  # To verify if a user is signed in
+  user_signed_in?
+  # The current signed-in user
+  current_user
+  # Access the session for this scope
+  user_session
+  # You can also overwrite after_sign_in_path_for and after_sign_out_path_for to customize your redirect hooks
+
+12.
+# enable yaml format on the rails console
+$ YAML::ENGINE.yamler ='syck'
+$ jobs = Job.all
+$ y jobs
