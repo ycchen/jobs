@@ -14,6 +14,7 @@
 					<ul class="nav pull-right">
 						<% if user_signed_in? %>
 							<li><%= link_to "Hi #{current_user.display_name}", edit_user_registration_path()%></li>
+							<li><%= link_to t(:list_my_posting), jobs_path(:user_id => current_user) %></li>
 							<li><%= link_to "Setting", edit_user_registration_path() %></li>
 							<li><%= link_to t(:signout), destroy_user_session_path(), :method => :delete %></li>
 						<% else %>

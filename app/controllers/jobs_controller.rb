@@ -2,11 +2,29 @@ class JobsController < ApplicationController
   before_filter :authenticate_user!, :only => [:new, :edit, :update, :destroy]
   
   def index
-    @jobs = Job.all
+    if params[:user_id]
+      @jobs = User.find(params[:user_id]).jobs.order("created_at desc")
+      # @jobs = Job.where("user_id=#{params[:user_id]}")
+    elsif params[:search]
+      @jobs = Job.search(params[:search])
+    else
+      @jobs = Job.all
+    end
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @jobs}
+    end
+    
   end
 
   def show
     @job = Job.find(params[:id])
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @job}
+    end
   end
 
   def new

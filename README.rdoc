@@ -86,3 +86,26 @@ Devise controller filters and helpers
 $ YAML::ENGINE.yamler ='syck'
 $ jobs = Job.all
 $ y jobs
+
+13. Console SQL Tips
+http://www.codercaste.com/2011/02/11/10-ruby-on-rails-3-tips-that-will-make-you-a-better-rails-programmer/
+
+http://stackoverflow.com/questions/9869870/how-to-get-a-single-columns-values-into-an-array
+
+pluck method: http://apidock.com/rails/ActiveRecord/Calculations/pluck
+
+# console sql tip
+# get one column from model
+$ Job.pluck(:user_id) # SELECT jobs.user_id FROM jobs
+$ Job.uniq.pluck(:user_id) # SELECT DISTINCT user_id FROM jobs
+$ Job.where(:confirmed => true).limit(5).pluck(:id)
+$ getUserId = Job.find_by_sql("select user_id from jobs")
+
+# update multiple records in rails
+# UPDATE "jobs" SET "user_id" = 1 WHERE "jobs"."user_id" = 9
+$ Job.update_all({:user_id => 1}, {:user_id => 9}) 
+
+# list table in the console
+$ ActiveRecord::Base.connection.tables
+$ ActiveRecord::Base.connection.columns("table_name")
+$ ActiveRecord::Base.connection.table_structure("jobs")

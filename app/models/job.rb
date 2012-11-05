@@ -15,9 +15,21 @@ class Job < ActiveRecord::Base
   validates_inclusion_of :job_type, :in => JOB_TYPE
   validates_inclusion_of :occupation, :in => OCCUPATION
 
+  belongs_to  :owner, :class_name => "User", :foreign_key => "user_id"
   
   def deadline_forever
   	@deadline_forever ||= !self.deadline
   end
 
+  def self.search(search)
+    if search
+      find(:all, :conditions => 
+        ['title like ? OR job_type like ? OR occupation like ? OR company_name like ? OR URL like ? OR location like ? OR description like ? OR apply_information like ?',
+          "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%"
+        ])
+    else
+      find(:all)
+    end
+      
+   end 
 end
