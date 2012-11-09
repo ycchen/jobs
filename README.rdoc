@@ -1,4 +1,10 @@
 == Welcome to Jobs
+Here are the steps and notes of how I create this applications.
+
+# set up application
+$ rake db:migrate
+$ rake db:seed
+
 1. Add following gems to Gemfile
    
     gem 'jquery-rails'
@@ -109,3 +115,28 @@ $ Job.update_all({:user_id => 1}, {:user_id => 9})
 $ ActiveRecord::Base.connection.tables
 $ ActiveRecord::Base.connection.columns("table_name")
 $ ActiveRecord::Base.connection.table_structure("jobs")
+
+14. set up production db & precompile assets (css)
+# Create and migrate production database
+$ rake db:migrate RAILS_ENV=production
+$ rake db:seed RAILS_ENV=production
+
+# precompile assets (css) for production environment
+$ rake assets:precompile
+
+15. proc and lambda in Ruby
+lambad { foo } and proc { foo } is essensially the same thing, you can use both interchangeable in your code.
+
+# example to find all jobs that is still not pass the deadline
+scope :online, lambda{ where('deadline is NULL OR deadline > ?', Date.today)}
+
+$ jobs = Job.online
+# this will execute the query of
+ SELECT COUNT(*) FROM "jobs" WHERE (deadline is NULL OR deadline > '2012-11-06')
+$ jobs.count 
+# this won't execute the query
+$ jobs.size
+# You actually have to call .all, .count, .each or .first to get the query to execute.
+
+16. add status to jobs table
+$ rails g migration add_status_to_jobs status:string

@@ -1,11 +1,18 @@
 Jobs::Application.routes.draw do
-  resources :jobs
-
-  get "home/index"
-
   resources :posts
 
+  get "home/index"
+  
   devise_for :users
+  
+  resources :jobs do
+    member do
+      put :open
+      put :close
+    end
+  end
+
+  
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

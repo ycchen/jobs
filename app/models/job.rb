@@ -1,5 +1,5 @@
 class Job < ActiveRecord::Base
-  attr_accessible :title, :job_type, :occupation, :company_name, :location, :url, :description, :apply_information, :deadline, :user_id, :deadline_forever
+  attr_accessible :title, :job_type, :occupation, :company_name, :location, :url, :description, :apply_information, :deadline, :user_id, :deadline_forever, :status
 
   JOB_TYPE = %w[Full-time Part-time Contract Internship Other]
   OCCUPATION = 	['Web back-end', 'Web front-end', 'Web-design', 'QA/Testing', 'Other']
@@ -17,6 +17,15 @@ class Job < ActiveRecord::Base
 
   belongs_to  :owner, :class_name => "User", :foreign_key => "user_id"
   
+  before_validation :set_status, :on => :create
+
+  # scope :online, where("deadline is NULL OR deadline > ?", Date.today)
+  scope :published, lambda{ where(:status => "published")}
+  # scope :open, lambda { where("deadline is NULL OR deadline > ?", Date.today) }
+  # scope :closed, lambda {where(:status => "closed")}
+
+  
+
   def deadline_forever
   	@deadline_forever ||= !self.deadline
   end
@@ -30,6 +39,23 @@ class Job < ActiveRecord::Base
     else
       find(:all)
     end
-      
-   end 
+   end
+
+   def open
+    self.status = "published"  
+   end
+
+   def close
+     self.status = "closed"
+   end
+
+   def closed?
+     self.status == "closed"
+   end
+
+   private
+
+   def set_status
+      self.status = "published"
+    end 
 end

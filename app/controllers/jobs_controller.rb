@@ -1,6 +1,6 @@
 class JobsController < ApplicationController
   before_filter :authenticate_user!, :only => [:new, :edit, :update, :destroy]
-  
+  before_filter :find_my_job, :only =>[:edit, :update, :destroy, :open, :close]
   def index
     if params[:user_id]
       @jobs = User.find(params[:user_id]).jobs.order("created_at desc")
@@ -57,5 +57,24 @@ class JobsController < ApplicationController
     @job = Job.find(params[:id])
     @job.destroy
     redirect_to jobs_url, :notice => "Successfully destroyed job."
+  end
+
+  def open
+    @job.open
+    @job.save!
+
+    redirect_to job_path(@job)
+  end
+
+  def close
+    @job.close
+    @job.save!
+
+    redirect_to job_path(params[:id])
+  end
+
+  private
+  def find_my_job
+    @job = current_user.jobs.find(params[:id])
   end
 end
