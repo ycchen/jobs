@@ -140,3 +140,51 @@ $ jobs.size
 
 16. add status to jobs table
 $ rails g migration add_status_to_jobs status:string
+
+http://ashleyangell.com/2009/11/form-select-helper-in-ruby-on-rails/
+17. select helper: "Select", "select_tag" and "collection_select"
+<%= select("payment", "id", {"Male" => "1", "Female" => "2"}) %>
+<%= f.select :gender_id, @genders.map{|r| [r.name, r.id]} %>
+<%= select_tag "payment", options_for_select(["Male","Female"],"Male") %>
+or
+<%= select_tag "payment", options_for_select(%w{Male Female}) %>
+
+#multi-select boxes:
+<%= select_tag 'payment[]', options_for_select(@genders), :multiple => true, :size => 3 %>
+
+<%= collection_select(:gender, :id, @genders, :id, :name, options= {:propmt => "-Select a gender"}, :class => "gender") %>
+
+<%= f.select :student_id, Student.find(:all, 
+:order => "family_name, give_name").collect {|s| [(s.give_name + " " + s.family_name), s.id] %>
+
+<%= f.select :job_type, Job::JOB_TYPE.collect{ |t| [t,t]} %>
+OR
+<% Job::JOB_TYPE.each do |t| %>
+     <%= f.radio_button :job_type, t %> <%= f.label :job_type, t, :value => t, :class => "inline" %>
+<% end %>
+
+<%= f.select :occupation, Job::OCCUPATION.collect{|o| [o,o]} %>
+OR
+<% Job::OCCUPATION.each do |o| %>
+  <%= f.radio_button :occupation, o %> <%= f.label :occupation, o, :value => o, :class => "inline" %>
+<% end %>
+
+18. Adding pagination using Kaminari gem
+You can configure the following default values by overriding these values using Kaminari.config method
+default_per_page  # 25 by default
+max_per_page      # nil by default
+window            # 4 by default
+outer_window      # 0 by default
+left              # 0 by default
+right             # 0 by default
+page_method_name  # :page by default
+param_name        # :page by default
+
+#generator command
+$ rails g kaminari:config
+# Kaminari methods does not work on Array. We will need to use Kaminari.paginate_array()
+@jobs = Job.all # it will return an Array
+@jobs = Kaminari.paginate_array(Job.all).page(params[:page]).per(5)
+
+# Kaminari tips
+http://blog.noizeramp.com/2011/10/13/kaminari-tips-and-tricks/

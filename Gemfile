@@ -9,6 +9,8 @@ gem 'jquery-rails'
 gem 'bcrypt-ruby', :require => 'bcrypt'
 gem 'devise'
 gem 'capistrano'
+gem 'kaminari'
+gem 'will_paginate'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -29,8 +31,6 @@ group :development, :test do
 	gem 'nifty-generators'
 	gem 'faker'
 	gem "populator", "~> 1.0.0"
-	gem 'will_paginate'
-	gem 'kaminari'
 	gem 'sqlite3'
 end
 

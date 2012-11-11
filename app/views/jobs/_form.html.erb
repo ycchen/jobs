@@ -21,18 +21,14 @@
 
     <div class="field reset">
       <%= f.label :job_type, t("job.type") %>
-      <% Job::JOB_TYPE.each do |t| %>
-           <%= f.radio_button :job_type, t %> <%= f.label :job_type, t, :value => t, :class => "inline" %>
-      <% end %>
+      <%= f.select :job_type, Job::JOB_TYPE.collect{ |t| [t,t]}, :prompt => 'Select one' %>
     </div>
-
+    
     <div class="field reset">
       <%= f.label :occupation, t("job.occupation") %>
-      <% Job::OCCUPATION.each do |o| %>
-        <%= f.radio_button :occupation, o %> <%= f.label :occupation, o, :value => o, :class => "inline" %>
-      <% end %>
+      <%= f.select :occupation, Job::OCCUPATION.collect{|o| [o,o]},:prompt => 'Select one' %>
     </div>
-
+    
     <div class="field">
       <%= f.label :location, t("job.location") %>
       <%= f.text_field :location, :class =>"text" %>

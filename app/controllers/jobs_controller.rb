@@ -3,12 +3,14 @@ class JobsController < ApplicationController
   before_filter :find_my_job, :only =>[:edit, :update, :destroy, :open, :close]
   def index
     if params[:user_id]
-      @jobs = User.find(params[:user_id]).jobs.order("created_at desc")
+      # @jobs = User.find(params[:user_id]).jobs.order("created_at desc")
+      @jobs = Kaminari.paginate_array(User.find(params[:user_id]).jobs.order("created_at desc")).page(params[:page]).per(15)
       # @jobs = Job.where("user_id=#{params[:user_id]}")
     elsif params[:search]
-      @jobs = Job.search(params[:search])
+      # @jobs = Job.search(params[:search])
+      @jobs = Kaminari.paginate_array(Job.search(params[:search])).page(params[:page]).per(15)
     else
-      @jobs = Job.all
+      @jobs = Job.page(params[:page]).per(15)
     end
 
     respond_to do |format|
