@@ -1,0 +1,4 @@
+$('#joblist_table').append('<%= j render :partial => 'joblist' %>');
+$('.pagination').replaceWith('<%= j paginate(@jobs) %>');
+if ($('.pagination .next').length ==0)
+	$('.pagination').hide()

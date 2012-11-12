@@ -28,7 +28,7 @@ end
 
 number = [1,2,3,4,5,6,7,8,9,10]
 
-30.times do |n|
+100.times do |n|
 	Job.create!(:title => "Developer Job #{n}", 
 				:url => Faker::Internet.url,
 				:company_name => Faker::Company.name,

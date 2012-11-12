@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= content_for?(:title) ? yield(:title) : "Jobs Engine" %></title>
     <%= stylesheet_link_tag "application" %>
-    <%= javascript_include_tag "application" %>
     <%= csrf_meta_tag %>
     <%= yield(:head) %>
   </head>
@@ -39,10 +38,11 @@
                    :action => controller.action_name, :locale => "zh_tw" %>
       </p>
     </div>
-
+    <!-- 
     <footer>
      <%= debug(params) if Rails.env.development? %>
     </footer>
-
+ -->
+  <%= javascript_include_tag "application" %>
   </body>
 </html>

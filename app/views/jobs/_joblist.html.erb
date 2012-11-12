@@ -1,0 +1,8 @@
+      <% @jobs.each do |job| %>
+      <tr>
+        <td><%= job.created_at.to_date %></td>
+        <td><%= link_to job.title, job_path(job) %></td>
+        <td><%= job.company_name %></td>
+        <td><%= job.location %></td>
+      </tr>
+      <% end %>

@@ -16,6 +16,7 @@ class JobsController < ApplicationController
     respond_to do |format|
       format.html
       format.json { render json: @jobs}
+      format.js   
     end
     
   end

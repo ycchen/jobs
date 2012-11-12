@@ -188,3 +188,31 @@ $ rails g kaminari:config
 
 # Kaminari tips
 http://blog.noizeramp.com/2011/10/13/kaminari-tips-and-tricks/
+
+19. render partial(Action View Partials)
+http://api.rubyonrails.org/classes/ActionView/PartialRenderer.html
+ActionView::PartialRenderer < ActionView::AbstractRenderer
+# This would render "jobs/_joblist.html.erb"
+<%= render :partial => "joblist" %>
+
+# This would first render "jobs/_joblist.html.erb" with @jobs passed in as the local variable myjobs, then render "jobs/_ad.html.erb"
+<%= render :partial => "joblist", :locals => {:myjobs => @jobs} %>
+<% @advertisements.each do |ad| %>
+  <%= render :partial => "ad", :locals => {:ad => ad} %>
+<% end %>
+
+<%= render :partial => "account", :object => @buyer %>
+# This would proivde the @buyer object tothe partial, available under the local variable account and is equivalent to:
+<%= render :partial => "account", :locals => { :account => @buyer } %>
+
+<%= render :partial => "account", :object => @buyer, :as => 'user' %>
+this is equivalent to
+<%= render :partial => "account", :locals => { :user => @buyer } %>
+
+19. Add endless page
+# Make sure the Job#index controller handle JavaScript inside of respond_to block
+# Added partial in views/jobs/index.html.erb
+<%= render :partial => 'joblist' %> # render template Jobs/_joblist.html.erb
+# Added index.js.erb to handle Ajax content
+$('#joblist_table').append('<%= j render :partial => 'joblist' %>'); # append Ajax content to joblist_table, by render jobs/_joblist.html.erb with @jobs object
+$('.pagination').replaceWith('<%= j paginate(@jobs) %>'); #replace .pagination content with <%= j paginate(@jobs) %>
