@@ -210,6 +210,7 @@ this is equivalent to
 <%= render :partial => "account", :locals => { :user => @buyer } %>
 
 19. Add endless page
+# Added endless.js.coffee
 # Make sure the Job#index controller handle JavaScript inside of respond_to block
 # Added partial in views/jobs/index.html.erb
 <%= render :partial => 'joblist' %> # render template Jobs/_joblist.html.erb
