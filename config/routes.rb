@@ -1,4 +1,10 @@
 Jobs::Application.routes.draw do
+  namespace :api, defaults: {format: 'json'} do
+    namespace :v1 do
+      resources :jobs
+    end
+  end
+
   resources :posts
 
   get "home/index"

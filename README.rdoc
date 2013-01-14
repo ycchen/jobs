@@ -217,3 +217,42 @@ this is equivalent to
 # Added index.js.erb to handle Ajax content
 $('#joblist_table').append('<%= j render :partial => 'joblist' %>'); # append Ajax content to joblist_table, by render jobs/_joblist.html.erb with @jobs object
 $('.pagination').replaceWith('<%= j paginate(@jobs) %>'); #replace .pagination content with <%= j paginate(@jobs) %>
+
+# Create REST API 
+# using namespace inside of the routes.rb and create a nested routes like api/v1
+# create a folder called "api/v1" inside of controllers folder
+# create a file called "posts_controller.rb" inside of /api/vi folder
+# api/v1/posts_controller.rb content looks like this
+
+ module Api
+  module V1
+    class JobsController < ApplicationController
+      respond_to :json
+
+      def index
+        respond_with Jobs.all
+      end
+     end
+  end
+ end
+
+# Test it with http://localhost:3000/api/v1/jobs.json
+# It should return a list of json data with all jobs
+# This URL requires us specify the JSON format and we can make JSON the default format 
+# by adding "defaults" option in the routes like this
+
+  namespace :api, defaults: {format: 'json'} do
+    namespace :v1 do
+      resources :products
+    end
+  end
+
+# api/v1/jobs_controller.rb
+# adding following class to handle adding additional information 
+# to the json data set, in this case is to add "created_on" additional column
+# and the data is base on created_at column
+class Job < :: Job
+  def as_json(options={})
+    super.merge(created_on: created_at.to_date )  
+  end
+end
