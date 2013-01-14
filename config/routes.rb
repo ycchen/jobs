@@ -1,6 +1,11 @@
+require 'api_constraints'
+
 Jobs::Application.routes.draw do
   namespace :api, defaults: {format: 'json'} do
-    namespace :v1 do
+    scope module: :v1, constraints: ApiConstraints.new(version: 1) do
+      resources :jobs
+    end
+    scope module: :v2, constraints: ApiConstraints.new(version: 2, default: true) do
       resources :jobs
     end
   end

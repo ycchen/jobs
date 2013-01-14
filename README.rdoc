@@ -218,7 +218,7 @@ this is equivalent to
 $('#joblist_table').append('<%= j render :partial => 'joblist' %>'); # append Ajax content to joblist_table, by render jobs/_joblist.html.erb with @jobs object
 $('.pagination').replaceWith('<%= j paginate(@jobs) %>'); #replace .pagination content with <%= j paginate(@jobs) %>
 
-# Create REST API 
+# Create REST API versioning
 # using namespace inside of the routes.rb and create a nested routes like api/v1
 # create a folder called "api/v1" inside of controllers folder
 # create a file called "posts_controller.rb" inside of /api/vi folder
@@ -254,5 +254,38 @@ $('.pagination').replaceWith('<%= j paginate(@jobs) %>'); #replace .pagination c
 class Job < :: Job
   def as_json(options={})
     super.merge(created_on: created_at.to_date )  
+  end
+end
+
+# Release v2 we just need to copy the app/controllers/api/v1 to app/controllers/api/v2
+# Update routes.rb to add api/v2 , copy namespace :v1 block to :v2 block
+  namespace :api, defaults: {format: 'json'} do
+    namespace :v1 do
+      resources :jobs
+    end
+    namespace :v2 do
+      resources :jobs
+    end
+  end
+
+# Removing Version Numbers from the URL
+# By change namespace to scope on the routes.rb file
+  namespace :api, defaults: {format: 'json'} do
+    scope module: :v1, constraints: ApiConstraints.new(version: 1) do
+      resources :jobs
+    end
+    scope module: :v2, constraints: ApiConstraints.new(version: 2, default: true) do
+      resources :jobs
+    end
+  end
+# create app/lib/api_constraints.rb
+class ApiConstraints
+  def initialize(options)
+    @version = options[:version]
+    @default = options[:default]
+  end
+    
+  def matches?(req)
+    @default || req.headers['Accept'].include?("application/vnd.example.v#{@version}")
   end
 end
