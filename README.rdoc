@@ -325,10 +325,13 @@ end
 # once the token has generate and user can access to the API by passing access_token on the URL
 # http://localhost:3000/api/job?access_token=79b25422c18a6e68b0cd4d50cc7b9725
 
-# passing access_token on the url is not a good idea, we can pass access_token through the HTTP HEADER, by using authenticate_or_request_with_http_token 
+# passing access_token on the url is not a good idea, especially when the token does not expired, so we can pass access_token through the HTTP HEADER, by using authenticate_or_request_with_http_token 
 
 def restrict_access
   authenticate_or_request_with_http_token do |token, options|
     ApiKey.exists?(access_token: token)
   end
 end
+
+# use curl to test it
+$ curl http://localhost:3000/api/jobs -H 'Authorization: Token token="79b25422c18a6e68b0cd4d50cc7b9725"'
