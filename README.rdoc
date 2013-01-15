@@ -289,3 +289,40 @@ class ApiConstraints
     @default || req.headers['Accept'].include?("application/vnd.example.v#{@version}")
   end
 end
+
+# Securing an API
+# 1st option is using HTTP Basic Authentication, by adding http_basic_authenticate_with code below to api/v1/jobs_controller.rb
+http_basic_authenticate_with :name => "admin", :password => "admin"
+
+# Use curl to test it
+$ curl http://localhost:3000/api/jobs
+
+# to see the http header 
+$ curl http://localhost:3000/api/jobs -I
+
+# passing username and password to access to an API
+$ curl http://localhost:3000/api/jobs -u "admin:admin"
+
+# 2nd option is using "access token"
+# create api_key model with access_token column. You can add role, expired_at columns ...ect
+
+$ rails g model api_key access_token
+$ rake db:migrate
+
+# to test api_key on the rails console windows, by issue this command it will generate an apikey
+$ ApiKey.create!
+
+# modify api/v2/jobs_controller.rb to add the token restriction code below
+before_filter :restrict_access
+
+private
+def restrict_access
+  api_key = ApiKey.find_by_access_token(params[:access_token])
+  head :unauthorized unless api_key
+end
+
+# in general this apikey will be generate on the user profile page, so user can copy and paste into their api profile
+# once the token has generate and user can access to the API by passing access_token on the URL
+# http://localhost:3000/api/job?access_token=79b25422c18a6e68b0cd4d50cc7b9725
+
+# passing access_token on the url is not a good idea, we can pass access_token through the HTTP HEADER, by using authenticate_or_request_with_http_token 

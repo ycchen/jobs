@@ -1,6 +1,7 @@
 module Api
 	module V1
 		class JobsController < ApplicationController
+			# http_basic_authenticate_with :name => "admin", :password => "admin"
 
 			# adding following class to handle adding additional information 
 			# to the json data set, in this case is to add "created_on" additional column

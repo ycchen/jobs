@@ -1,7 +1,8 @@
 module Api
 	module V2
 		class JobsController < ApplicationController
-
+			#http_basic_authenticate_with :name => "admin", :password => "admin"
+			before_filter :restrict_access
 			# adding following class to handle adding additional information 
 			# to the json data set, in this case is to add "created_on" additional column
 			# and the data is base on created_at column
@@ -32,6 +33,14 @@ module Api
 			def destroy
 				respond_with JobJob.destroy(params[:id])
 			end
+
+		private
+
+			def restrict_access
+				api_key = ApiKey.find_by_access_token(params[:access_token])
+				head :unauthorized unless api_key
+			end
+
 		end
 	end
 end
