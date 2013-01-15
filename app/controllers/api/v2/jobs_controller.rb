@@ -36,9 +36,22 @@ module Api
 
 		private
 
+			# def restrict_access
+			# 	api_key = ApiKey.find_by_access_token(params[:access_token])
+			# 	head :unauthorized unless api_key
+			# end
+
+			# using authenticate_or_request_with_http_token method
 			def restrict_access
-				api_key = ApiKey.find_by_access_token(params[:access_token])
-				head :unauthorized unless api_key
+
+				if params[:access_token]
+					api_key = ApiKey.find_by_access_token(params[:access_token])
+					head :unauthorized unless api_key
+				else
+					authenticate_or_request_with_http_token do |token, options|
+						ApiKey.exists?(access_token: token)
+					end
+				end
 			end
 
 		end
