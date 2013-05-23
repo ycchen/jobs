@@ -335,3 +335,26 @@ end
 
 # use curl to test it
 $ curl http://localhost:3000/api/jobs -H 'Authorization: Token token="79b25422c18a6e68b0cd4d50cc7b9725"'
+
+# add fulltext search using sunspot solr
+gem 'sunspot_rails'
+gem 'sunspot_solr'
+
+bundle install
+
+-- Generate a default configuration file
+$ rails g sunspot_rails:install
+
+-- start Solr
+$ rake sunspot:solr:start 
+or
+$ rake sunspot:solr:run
+
+http://blog.bigbinary.com/2012/10/11/solr-sunspot-websolr-delayed-job.html
+
+# Full-Text Search in Rails using elasticsearch
+-- install elasticsearch on window, download and unzip to c:\ and run bin/elasticsearch.bat
+
+-- install elasticsearch client "tire" gem
+
+-- gem 'tire'

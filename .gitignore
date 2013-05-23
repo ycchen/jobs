@@ -14,6 +14,9 @@
 /log/*.log
 /tmp
 
+# Ignore all solr folder
+solr/data
+
 # Ignore all project files
 *.sublime-project
 *.sublime-workspace

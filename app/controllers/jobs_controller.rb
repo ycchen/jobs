@@ -2,6 +2,7 @@ class JobsController < ApplicationController
   before_filter :authenticate_user!, :only => [:new, :edit, :update, :destroy]
   before_filter :find_my_job, :only =>[:edit, :update, :destroy, :open, :close]
   def index
+    
     if params[:user_id]
       # @jobs = User.find(params[:user_id]).jobs.order("created_at desc")
       @jobs = Kaminari.paginate_array(User.find(params[:user_id]).jobs.order("created_at desc")).page(params[:page]).per(15)
@@ -12,6 +13,38 @@ class JobsController < ApplicationController
     else
       @jobs = Job.page(params[:page]).per(15)
     end
+     # raise params[:search].nil?.inspect
+      # if !params[:search].nil?
+      #   raise params[:search].inspect
+      #   Job.search {fulltext 'developer'}
+      #   # raise Sunspot.search(Job).inspect
+      # end
+
+      # @search = Job.search do
+      #   keywords(params[:search])
+      #   # fulltext params[:search] do
+      #   #   fields(:job_type)
+      #   # end
+      # end
+      # @jobs = @search.results
+    
+    if params[:user_id]
+      # @jobs = User.find(params[:user_id]).jobs.order("created_at desc")
+      @jobs = Kaminari.paginate_array(User.find(params[:user_id]).jobs.order("created_at desc")).page(params[:page]).per(15)
+      # @jobs = Job.where("user_id=#{params[:user_id]}")
+    elsif params[:search]
+      # @jobs = Job.search(params[:search], load: true)
+      @jobs = Kaminari.paginate_array(Job.search(params[:search]), load: true).page(params[:page]).per(15)
+    else
+      @jobs = Job.page(params[:page]).per(15)
+    end
+
+
+    # if params[:search].present?
+    #   @jobs = Job.search(params[:search], load: true)
+    # else
+    #   @jobs = Job.page(params[:page]).per(15)
+    # end
 
     respond_to do |format|
       format.html

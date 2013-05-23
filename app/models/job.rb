@@ -24,22 +24,36 @@ class Job < ActiveRecord::Base
   # scope :open, lambda { where("deadline is NULL OR deadline > ?", Date.today) }
   # scope :closed, lambda {where(:status => "closed")}
 
-  
+  include Tire::Model::Search
+  include Tire::Model::Callbacks
+
+  # ElasticSerach
+  # def self.search(params)
+  #   tire.search(load: true)    do
+  #     query { string params[:search]} if params[:search].present?
+  #   end
+  # end
+
+  # searchable do
+  #   text :title, :job_type, :occupation, :company_name, :location, :url, :description
+  # end
 
   def deadline_forever
   	@deadline_forever ||= !self.deadline
   end
 
-  def self.search(search)
-    if search
-      find(:all, :conditions => 
-        ['title like ? OR job_type like ? OR occupation like ? OR company_name like ? OR URL like ? OR location like ? OR description like ? OR apply_information like ?',
-          "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%"
-        ])
-    else
-      find(:all)
-    end
-   end
+
+
+  # def self.search(search)
+  #   if search
+  #     find(:all, :conditions => 
+  #       ['title like ? OR job_type like ? OR occupation like ? OR company_name like ? OR URL like ? OR location like ? OR description like ? OR apply_information like ?',
+  #         "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%"
+  #       ])
+  #   else
+  #     find(:all)
+  #   end
+  #  end
 
    def open
     self.status = "published"  
