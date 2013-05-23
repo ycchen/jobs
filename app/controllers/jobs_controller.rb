@@ -33,8 +33,8 @@ class JobsController < ApplicationController
       @jobs = Kaminari.paginate_array(User.find(params[:user_id]).jobs.order("created_at desc")).page(params[:page]).per(15)
       # @jobs = Job.where("user_id=#{params[:user_id]}")
     elsif params[:search]
-      # @jobs = Job.search(params[:search], load: true)
-      @jobs = Kaminari.paginate_array(Job.search(params[:search]), load: true).page(params[:page]).per(15)
+      @jobs = Job.search(params[:search], load: true, page: params[:page])
+      # @jobs = Kaminari.paginate_array(Job.search(params[:search]), load: true).page(params[:page]).per(15)
     else
       @jobs = Job.page(params[:page]).per(15)
     end

@@ -29,7 +29,7 @@ class Job < ActiveRecord::Base
 
   # ElasticSerach
   # def self.search(params)
-  #   tire.search(load: true)    do
+  #   tire.search(load: true) do
   #     query { string params[:search]} if params[:search].present?
   #   end
   # end
